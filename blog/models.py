@@ -35,3 +35,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{} created by {} at {}".format(self.text, self.created_by.username, self.created_at)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, related_name='profile')
+    birthday = models.DateField(blank=True, null=True)
+    first_name = models.CharField(max_length=33)
+    last_name = models.CharField(max_length=33)

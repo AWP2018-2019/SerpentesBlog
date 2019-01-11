@@ -8,5 +8,10 @@ from . import models
 class CommentAdmin(admin.ModelAdmin):
         list_display = ('text', 'created_by', 'post')
 
+class UserProfileAdmin(admin.ModelAdmin):
+        list_display =('user', 'birthday','last_name','first_name')
+        search_fields=('user__username',)
+        
+admin.site.register(models.UserProfile, UserProfileAdmin)
 admin.site.register(models.Post)
 admin.site.register(models.Comment, CommentAdmin)
