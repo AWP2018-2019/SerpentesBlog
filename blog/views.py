@@ -41,6 +41,14 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
             **form.cleaned_data
         )
         return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
+        
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "comment_delete.html"
+    model = Comment
+    pk_url_kwarg = 'pk_comment'
+
+    def get_success_url(self):
+        return reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']})
 
 
 class UserProfileView(LoginRequiredMixin, DetailView):
