@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
-from models import Post, Comment
+from models import Post, Comment, UserProfile, Image, User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -41,3 +41,13 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
             **form.cleaned_data
         )
         return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    template_name = 'userprofile.html'
+    model = UserProfile
+    context_object_name = 'userprofile'
+
+    def get_object(self):
+        user = User.objects.get(id=self.kwargs['pk'])
+        return user

@@ -20,7 +20,7 @@ class Post(models.Model):
 
 class Image(models.Model):
     nume = models.CharField(max_length=200)
-    image = models.FileField()
+    image = models.ImageField()
     post = models.ForeignKey(Post, related_name="images")
     added_at = models.DateTimeField(auto_now_add=True)
     added_by = models.ForeignKey(User, related_name='images')
