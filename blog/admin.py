@@ -5,4 +5,8 @@ from django.contrib import admin
 from . import models
 
 # Register your models here.
+class CommentAdmin(admin.ModelAdmin):
+        list_display = ('text', 'created_by', 'post')
+
 admin.site.register(models.Post)
+admin.site.register(models.Comment, CommentAdmin)
