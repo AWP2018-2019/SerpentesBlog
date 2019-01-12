@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', PostListView.as_view(), name='post_list'),
     url(r'^post/create$', PostCreateView.as_view(), name='post_create'),
     url(r'^post/(?P<pk>[0-9]+)/edit$', PostEditView.as_view(), name='post_edit'),
+    url(r'^post/(?P<pk>[0-9]+)$', post_detail, name='post_detail'),
     url(r'^post/(?P<pk>[0-9]+)/delete$', PostDeleteView.as_view(), name='post_delete'),
     url(r'^post/(?P<pk>[0-9]+)/comment/create$', CommentCreateView.as_view(), name='comment_create'),
     url(r'^userprofile/(?P<pk>[0-9]+)$', UserProfileView.as_view(), name='user_profile'),

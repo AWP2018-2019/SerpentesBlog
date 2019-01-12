@@ -15,3 +15,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(models.UserProfile, UserProfileAdmin)
 admin.site.register(models.Post)
 admin.site.register(models.Comment, CommentAdmin)
+admin.site.register(models.Image)
