@@ -11,6 +11,7 @@ from views import (
     PostDeleteView,
     UserProfileView,
     UserProfileUpdateView,
+    UserProfileCreateView,
     LoginView,
     RegisterView,
     LogoutView,
@@ -29,6 +30,8 @@ urlpatterns = [
     url(r'^post/(?P<pk>[0-9]+)/comment/create$', CommentCreateView.as_view(), name='comment_create'),
     url(r'^userprofile/(?P<pk>[0-9]+)$', UserProfileView.as_view(), name='user_profile'),
     url(r'^userprofile/(?P<pk>[0-9]+)/edit$', UserProfileUpdateView.as_view(),name='profile_edit'),
+     url(r'^userprofile/(?P<pk>[0-9]+)/create$', UserProfileCreateView.as_view(),
+        name='user_profile_create'),
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/edit$', CommentEditView.as_view(), name='comment_edit'),
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/delete$', CommentDeleteView.as_view(), name='comment_delete'),
 ]

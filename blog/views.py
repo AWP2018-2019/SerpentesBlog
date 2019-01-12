@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from forms import CommentForm,UserProfileForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from datetime import datetime 
 
 
 def index(request):
@@ -104,6 +105,19 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         user = User.objects.get(id=self.kwargs['pk'])
         return user
         
+class UserProfileCreateView( CreateView):
+    model = UserProfile
+    fields = ['birthday', 'first_name', 'last_name']
+    template_name = 'user_profile_create.html'
+    
+    
+    def form_valid(self, form):
+        UserProfile.objects.create(
+            user=self.request.user,
+            **form.cleaned_data
+        )
+        return redirect(reverse_lazy("index"))
+        
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = UserProfile
     form_class = UserProfileForm
@@ -120,7 +134,6 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         data = form.cleaned_data
         self.object.birthday = data['birthday']
-        self.object.country_id = data['country']
         self.request.user.first_name = data['first_name']
         self.request.user.last_name = data['last_name']
         self.request.user.email = data['e_mail']
@@ -153,12 +166,21 @@ class RegisterView(CreateView):
     form_class = UserCreationForm
     model = User
 
-    def form_valid(self, form):
-        data = form.cleaned_data
-        user = User.objects.create_user(username=data['username'],
+    def post(self, request, *args, **kwargs):
+        form = UserCreationForm( data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create_user(username=data['username'],
                                         password=data['password1'])
-        UserProfile.objects.create(user=user)
-        return redirect('index')
+            #UserProfile.objects.create(user=user)
+            # import pdb; pdb.set_trace()
+            user = authenticate(username=data['username'], password=data['password1'])
+            login(request, user)
+            return redirect(reverse_lazy("user_profile_create",
+                                     kwargs={"pk": user.id}))
+        else:
+            return redirect('index')
+        
 
 class LogoutView(View):
 

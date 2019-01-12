@@ -12,4 +12,7 @@
       <li class="list-group-item"><b>Birthday:</b> {{ userprofile.profile.birthday }}</li>
     </ul>
 </div>
+   <div class="m-2">
+      <a class="btn btn-primary" href="{% url 'profile_edit' user.profile.id %}">Edit profile</a>
+    </div>
 {% endblock %}
