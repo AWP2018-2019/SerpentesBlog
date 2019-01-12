@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 # Create your views here.
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from forms import CommentForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 def index(request):
@@ -59,3 +60,39 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_object(self):
         user = User.objects.get(id=self.kwargs['pk'])
         return user
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
+
+    def get_context_data(self):
+        form = AuthenticationForm()
+        return {'form': form}
+
+    def post(self, request, *args, **kwargs):
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(username=data['username'],
+                                password=data['password'])
+            login(request, user)
+            return redirect(reverse_lazy('index'))
+        else:
+            return render(request, "login.html", {"form": form})
+
+class RegisterView(CreateView):
+    template_name= 'register.html'
+    form_class = UserCreationForm
+    model = User
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        user = User.objects.create_user(username=data['username'],
+                                        password=data['password1'])
+        UserProfile.objects.create(user=user)
+        return redirect('index')
+
+class LogoutView(View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect(reverse_lazy('index'))
