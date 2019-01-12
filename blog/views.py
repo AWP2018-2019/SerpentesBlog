@@ -32,14 +32,16 @@ class PostListView(ListView):
     model = Post
     context_object_name = 'post_list'
     
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView( CreateView):
     model = Post
     fields = ['text']
     template_name = 'post_create.html'
 
     def form_valid(self, form):
+        userProfile=UserProfile.objects.get(id=self.request.user.profile.id)
         post = Post.objects.create(
             created_by=self.request.user,
+            profile_id=userProfile,
             **form.cleaned_data
         )
         return redirect(reverse_lazy("post_detail", kwargs={"pk": post.id }))

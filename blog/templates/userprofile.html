@@ -3,16 +3,16 @@
 {% block title %} User Profile - {{ userprofile.username }} {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="card" style="background: rgba(255,255,255,0.8); top: 100px; padding: 16px;width:40%;">
   <h1>{{ userprofile.username }}' Profile</h1>
     <ul class="list-group m-4">
-      <li class="list-group-item"><b>Fullname:</b> {{ userprofile.first_name }} {{ userprofile.last_name }}</li>
+      <li class="list-group-item"><b>Fullname:</b> {{ userprofile.first_name }} </li>
       <li class="list-group-item"><b>Username:</b> {{ userprofile.username }}</li>
       <li class="list-group-item"><b>E-mail:</b> {{ userprofile.email }}</li>
       <li class="list-group-item"><b>Birthday:</b> {{ userprofile.profile.birthday }}</li>
     </ul>
-</div>
    <div class="m-2">
       <a class="btn btn-primary" href="{% url 'profile_edit' user.profile.id %}">Edit profile</a>
     </div>
+  </div>
 {% endblock %}

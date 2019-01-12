@@ -4,12 +4,21 @@
 {% endblock%}
 
 {% block content %}
-  <form method="post" class="form-inline justify-content-center">
+  
+   
+  <form method="post" class="form-horizontal justify-content-center">
     {% csrf_token %}
-    <div class="form-group mx-2">
+    <div class="card w-50 p-3 " style="left:300px;background: rgba(255,255,255,0.8); top: 100px; width:50%; padding: 16px;align-self:center;">
+     <div class="card-body" style="align-self:center;">
+      <div class="form-group mx-2">
       <textarea rows="4" cols="50" class="form-control" type="text-area" 
       name="text" required="" id="id_text" maxlength="200">{{ form.text.initial }}</textarea>
     </div>
+    <div style="text-align:center;">
     <input class="btn btn-secondary" type="submit" value="Update comment"/>
+    </div>
+  </div>
+  </div>
   </form>
+  
 {% endblock %}
