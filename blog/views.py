@@ -23,9 +23,10 @@ def index(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
+    img = post.images.all()
     form = CommentForm()
     return render(request, "post_detail.html", 
-    {"post": post, "form": form})
+    {"post": post, "img": img, "form": form})
     
 class PostListView(ListView):
     template_name = 'index.html'

@@ -1,4 +1,7 @@
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
+
 from views import (
     index,
     PostListView,
@@ -37,4 +40,4 @@ urlpatterns = [
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/edit$', CommentEditView.as_view(), name='comment_edit'),
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/delete$', CommentDeleteView.as_view(), name='comment_delete'),
     url(r'^post/(?P<pk>[0-9]+)/image/create$', UploadImage.as_view(), name='upload_image'),
-]
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) 

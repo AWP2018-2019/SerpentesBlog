@@ -40,6 +40,12 @@
       <input class="btn btn-secondary" type="submit" value="Comment" />
     </form>
     {% endif %}
+    {% if post.images.all %}
+      {% for image_group in img %}
+          <img src = "{{ image_group.image.url }}" alt = "{{image_group.image}}" width = 300 height = 300 />
+        {% endfor %}
+    {% endif %}
+    
     {% if post.comments.all %}
       {% regroup post.comments.all|dictsortreversed:"created_at" by created_at as comments %}
       {% for comment_group in comments %}
