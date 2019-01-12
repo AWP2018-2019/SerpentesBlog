@@ -15,6 +15,7 @@ from views import (
     LoginView,
     RegisterView,
     LogoutView,
+    UploadImage,
     
 )
 
@@ -35,4 +36,5 @@ urlpatterns = [
         name='user_profile_create'),
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/edit$', CommentEditView.as_view(), name='comment_edit'),
     url(r'^post/(?P<pk>[0-9]+)/comment/(?P<pk_comment>[0-9]+)/delete$', CommentDeleteView.as_view(), name='comment_delete'),
+    url(r'^post/(?P<pk>[0-9]+)/image/create$', UploadImage.as_view(), name='upload_image'),
 ]

@@ -187,3 +187,16 @@ class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect(reverse_lazy('index'))
+        
+class UploadImage(CreateView): 
+    model = Image
+    fields = ['nume','image']
+    
+    def post(self, request, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        post = Post.objects.get(id = self.kwargs['pk'])
+        Image.objects.create(
+            added_by = self.request.user,
+            post = post,
+            image = request.FILES['image_path'])
+        return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
