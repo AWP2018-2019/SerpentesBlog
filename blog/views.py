@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 # Create your views here.
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from forms import CommentForm
+from forms import CommentForm,UserProfileForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
@@ -31,6 +31,36 @@ class PostListView(ListView):
     model = Post
     context_object_name = 'post_list'
     
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['text']
+    template_name = 'post_create.html'
+
+    def form_valid(self, form):
+        post = Post.objects.create(
+            created_by=self.request.user,
+            **form.cleaned_data
+        )
+        return redirect(reverse_lazy("post_detail", kwargs={"pk": post.id }))
+
+class PostEditView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['text']
+    template_name = 'post_update.html'
+
+    def form_valid(self, form):
+        post = Post.objects.get(pk=self.kwargs['pk'])
+        post.text = form.cleaned_data['text']
+        post.save()
+        return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
+        
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "post_delete.html"
+    model = Post
+
+    def get_success_url(self):
+        return reverse_lazy('index')
+    
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['text']
@@ -42,6 +72,18 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
             post=post,
             **form.cleaned_data
         )
+        return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
+        
+class CommentEditView(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ['text']
+    pk_url_kwarg = 'pk_comment'
+    template_name = 'comment_update.html'
+
+    def form_valid(self, form):
+        comment = Comment.objects.get(pk=self.kwargs['pk_comment'])
+        comment.text = form.cleaned_data['text']
+        comment.save()
         return redirect(reverse_lazy("post_detail", kwargs={"pk": self.kwargs['pk']}))
         
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
@@ -61,6 +103,32 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_object(self):
         user = User.objects.get(id=self.kwargs['pk'])
         return user
+        
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = UserProfile
+    form_class = UserProfileForm
+    template_name = 'profile_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileUpdateView, self).get_context_data(**kwargs)
+        user =  self.object.user
+        context['form'].fields['first_name'].initial = user.first_name
+        context['form'].fields['last_name'].initial = user.last_name
+        context['form'].fields['e_mail'].initial = user.email
+        return context
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        self.object.birthday = data['birthday']
+        self.object.country_id = data['country']
+        self.request.user.first_name = data['first_name']
+        self.request.user.last_name = data['last_name']
+        self.request.user.email = data['e_mail']
+        self.object.save()
+        self.request.user.save()
+        return redirect(reverse_lazy("user_profile",
+                                     kwargs={"pk": self.request.user.id}))
+
 
 class LoginView(TemplateView):
     template_name = 'login.html'
