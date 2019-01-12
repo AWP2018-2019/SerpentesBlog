@@ -3,15 +3,16 @@
 {% block title %} Serpentes Blog {% endblock %}
 
 {% block content %}
-
-
+<br />
+<h1 style= "background: rgba(255,255,255,0.7); text-align: center;">Serpentes Blog</h1>
+<br />
 <div class="row container">
   {% for post in post_list %}
-    <div class="col-sm-6 p-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ post.text }}</h5>
-          <p class="card-text">Created by: <a href="{% url 'user_profile' pk=post.created_by.id %}">{{ post.created_by.username }}</a></p>
+    <div class="col-sm-6 p-3" >
+      <div class="card" style="background: rgba(255,255,255,0.8);">
+        <div class="card-body" >
+          <h5 style="text-align: center;" class="card-title">{{ post.text }}</h5>
+          <p class="card-text">Created by: <i><a style="color: #000;" href="{% url 'user_profile' pk=post.created_by.id %}">{{ post.created_by.username }}</i></a></p>
       </div>
       <div class="card-footer text-muted">
         {{ post.created_at }}
