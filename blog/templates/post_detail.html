@@ -18,6 +18,13 @@
         <a class="btn btn-secondary" href="{% url 'post_delete' post.id %}">Delete post</a>
         <a class="btn btn-secondary" href="{% url 'upload_image' pk=post.id %}">Upload Image</a>
       {% endif %}
+      <br>
+      <hr>
+      {% if post.images.all %}
+      {% for image_group in img %}
+          <img src = "{{ image_group.image.url }}" alt = "{{image_group.image}}" width = 300 height = 300 />
+        {% endfor %}
+    {% endif %}
     </div>
       </div>
       <div class="card-footer text-muted">
@@ -44,11 +51,7 @@
       <input class="btn btn-secondary" type="submit" value="Comment" />
     </form>
     {% endif %}
-    {% if post.images.all %}
-      {% for image_group in img %}
-          <img src = "{{ image_group.image.url }}" alt = "{{image_group.image}}" width = 300 height = 300 />
-        {% endfor %}
-    {% endif %}
+    
     
     {% if post.comments.all %}
       {% regroup post.comments.all|dictsortreversed:"created_at" by created_at as comments %}
