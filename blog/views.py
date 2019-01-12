@@ -59,3 +59,4 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_object(self):
         user = User.objects.get(id=self.kwargs['pk'])
         return user
+        
