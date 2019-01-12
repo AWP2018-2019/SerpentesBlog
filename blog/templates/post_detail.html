@@ -6,32 +6,36 @@
 {% block content %}
 <div class="container">
   <div class="p-3">
-    <div class="card">
+    <div class="card" style="background: rgba(255,255,255,0.8); top: 100px; padding: 16px;">
       <div class="card-body">
         <h1 class="card-title">{{ post.text }}</h1>
         <p class="card-text">Created by:
           <a href="{% url 'user_profile' post.created_by.id %}">{{ post.created_by.username }}</a>
         </p>
-      </div>
-      <div class="card-footer text-muted">
-        {{ post.created_at }}
-      </div>
-    </div>
-
-    <div class="m-2">
+        <div class="m-2">
       {% if user == post.created_by %}
         <a class="btn btn-secondary" href="{% url 'post_edit' post.id %}">Edit post</a>
         <a class="btn btn-secondary" href="{% url 'post_delete' post.id %}">Delete post</a>
         <a class="btn btn-secondary" href="{% url 'upload_image' pk=post.id %}">Upload Image</a>
       {% endif %}
     </div>
+      </div>
+      <div class="card-footer text-muted">
+        {{ post.created_at }}
+      </div>
+    </div>
+
+    
 
   </div>
-
-  <div class=" col-sm-12">
+  <div class="container">
+  <div class="p-3">
+  <div class="card" style="background: rgba(255,255,255,0.8); top: 100px; padding: 16px;">
+    <div class="card-body">
     <h2>Comments</h2>
+    <div class="card-footer text-muted">
     {% if user.is_authenticated %}
-    <form action="{% url 'comment_create' post.id %}" method="post" class="form-inline justify-content-center">
+    <form action="{% url 'comment_create' post.id %}" method="post" class="form-inline ">
       {% csrf_token %}
       <!--{{ form.as_p }}-->
       <div class="form-group mx-2">
@@ -51,10 +55,7 @@
       {% for comment_group in comments %}
         {% for comment in comment_group.list %}
         <div class="card m-3">
-          <div class="m-2">
-            <a class="btn btn-secondary" href="{% url 'comment_edit' post.id comment.id %}">Edit comment</a>
-            <a class="btn btn-secondary" href="{% url 'comment_delete' post.id comment.id %}">Delete comment</a>
-          </div>
+          
           <div class="card-body">
             <blockquote class="blockquote mb-0">
               <p>
@@ -67,14 +68,23 @@
                 <cite><a href="{% url 'user_profile' comment.created_by.id %}">{{ comment.created_by.username }}</a></cite>
                 on <cite>{{ comment.created_at }}</cite>
               </footer>
+              
             </blockquote>
+            <div class="m-2 ">
+              <a class="btn btn-secondary" href="{% url 'comment_edit' post.id comment.id %}">Edit comment</a>
+              <a class="btn btn-secondary" href="{% url 'comment_delete' post.id comment.id %}">Delete comment</a>
+            </div>
           </div>
         </div>
         {% endfor%}
       {% endfor %}
     {% else %}
-      <p> No comments yet.</p>
+      <p class="font-italic"> No comments yet.</p>
     {% endif %}
+  </div>
+  </div>
+  </div>
+  </div>
   </div>
 </div>
 {% endblock %}

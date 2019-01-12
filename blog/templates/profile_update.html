@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}
-  Edit profile
+  
 {% endblock%}
 
 {% block content %}
-  <form method="post" class="justify-content-center col-6">
+
+  <form method="post" class="justify-content-center ">
+    <div class="card" style="background: rgba(255,255,255,0.8); top: 100px; padding: 16px;width:40%;">
+  <h2 style="text-align:center;">Edit profile</h2>
     {% csrf_token %}
     {{ form.errors }}
     <div class="form-group mx-2">
@@ -33,7 +36,10 @@
              required="" id="id_e_mail" maxlength="100"
              value="{{ form.e_mail.initial }}">
     </div>
-
+    <div class="form-group mx-2">
     <input class="btn btn-secondary" type="submit" value="Update profile" />
+    </div>
+    </div>
   </form>
+  
 {% endblock %}

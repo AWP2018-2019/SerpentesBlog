@@ -16,7 +16,7 @@
     </li>
     {% endif %} 
     
-    <a href = "{% url 'post_create' %}" class="btn btn-primary"> Create Post</a>
+    <a href = "{% url 'post_create' user.id %}" class="btn btn-primary"> Create Post</a>
   {% else %}
     <li class="nav-item">
       <a class="nav-link active" style="color: #000; font-weight: bold" href="{% url 'login' %}">Login</a>
