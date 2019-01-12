@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Serpentes Blog {% endblock %}
+
+{% block content %}
+
+    <form action="#" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="form-group">
+              <label for="nume">Nume:</label>
+              <input type="text" name="nume" class="form-control" autofocus="" required="" id="nume" maxlength="150">
+          </div>
+    
+          <div class="form-group">
+              <label for="image_path">Imagine:</label>
+              <input type="file" name="image_path" class="form-control" required="" id="image_path">
+          </div>
+        <input type="submit" value="Add image" />
+    </form>
+    
+{% endblock %}

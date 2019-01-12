@@ -9,6 +9,14 @@
     <li class="nav-item">
       <a class="nav-link active" style="color: #000; font-weight: bold" href="{% url 'logout' %}">Logout</a>
     </li>
+    
+     {% if user.is_superuser %}
+    <li>
+      <a class="nav-link active" style="color: #000; font-weight: bold" href="{% url 'admin:index' %}">Admin</a>
+    </li>
+    {% endif %} 
+    
+    <a href = "{% url 'post_create' %}" class="btn btn-primary"> Create Post</a>
   {% else %}
     <li class="nav-item">
       <a class="nav-link active" style="color: #000; font-weight: bold" href="{% url 'login' %}">Login</a>
@@ -17,9 +25,4 @@
       <a class="nav-link active" href="{% url 'register' %}">Register</a>
     </li>
   {% endif %}
-    {% if user.is_superuser %}
-    <li>
-      <a class="nav-link active" style="color: #000; font-weight: bold" href="{% url 'admin:index' %}">Admin</a>
-    </li>
-    {% endif %} 
 </ul>

@@ -191,7 +191,9 @@ class LogoutView(View):
 class UploadImage(CreateView): 
     model = Image
     fields = ['nume','image']
-    
+    template_name = 'image_upload.html'
+
+        
     def post(self, request, *args, **kwargs):
         # import pdb; pdb.set_trace()
         post = Post.objects.get(id = self.kwargs['pk'])

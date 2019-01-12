@@ -22,19 +22,7 @@
       {% if user == post.created_by %}
         <a class="btn btn-secondary" href="{% url 'post_edit' post.id %}">Edit post</a>
         <a class="btn btn-secondary" href="{% url 'post_delete' post.id %}">Delete post</a>
-        <form action="{% url 'upload_image' post.id %}" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="form-group">
-              <label for="nume">Nume:</label>
-              <input type="text" name="nume" class="form-control" autofocus="" required="" id="nume" maxlength="150">
-          </div>
-
-          <div class="form-group">
-              <label for="image_path">Imagine:</label>
-              <input type="file" name="image_path" class="form-control" required="" id="image_path">
-          </div>
-        <input type="submit" value="Submit" />
-        </form>
+        <a class="btn btn-secondary" href="{% url 'upload_image' pk=post.id %}">Upload Image</a>
       {% endif %}
     </div>
 

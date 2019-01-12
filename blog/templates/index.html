@@ -16,6 +16,7 @@
       </div>
       <div class="card-footer text-muted">
         {{ post.created_at }}
+        <a href="{% url 'post_detail' post.id %}" class="btn btn-primary">See post details</a>
       </div>
     </div>
   </div>
