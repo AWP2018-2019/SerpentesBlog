@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from models import Post, Comment, UserProfile, Image, User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 # Create your views here.
 from django.views.generic.edit import CreateView, UpdateView, DeleteView

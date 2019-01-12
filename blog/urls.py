@@ -8,12 +8,14 @@ from views import (
     UserProfileView,
     LoginView,
     RegisterView,
+    LogoutView,
 )
 
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^$', PostListView.as_view(), name='post_list'),
     url(r'^post/(?P<pk>[0-9]+)/comment/create$', CommentCreateView.as_view(), name='comment_create'),
     url(r'^userprofile/(?P<pk>[0-9]+)$', UserProfileView.as_view(), name='user_profile'),
